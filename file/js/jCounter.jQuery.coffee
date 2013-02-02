@@ -2,7 +2,7 @@
 # jCounter - a simple character counter
 #
 # @author	Maximilian Mader
-# @copyright	2011 Maximilian Mader
+# @copyright	2011 - 2013 Maximilian Mader
 # @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
 # @package	jQuery.jCounter
 ###
@@ -28,22 +28,23 @@
 		@.on 'keypress keyup', $.proxy () ->
 			length = if options.countUp then @.val().length else max - @.val().length
 			
-			if options.countUp && max > 0
-				if length < max / 2
-					color = 1
-				else if max / 2 < length <= max / 1.2
-					color = 2
+			color = (if options.countUp 
+					if max > 0
+						if length < max / 2
+							1
+						else if max / 2 < length <= max / 1.2
+							2
+						else
+							3
+					else
+						1
 				else
-					color = 3
-			else if options.countUp
-				color = 1
-			else
-				if max / 2 < length
-					color = 1
-				else if max / 6 <= length <= max / 2
-					color = 2
-				else
-					color = 3
+					if max / 2 < length
+						1
+					else if max / 6 <= length <= max / 2
+						2
+					else
+						3)
 			
 			jCounterContainer.text(length).removeClass().addClass "#{options.counterClass} color-#{color}"
 		, @
