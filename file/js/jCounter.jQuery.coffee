@@ -4,7 +4,7 @@
 # @author	Maximilian Mader
 # @copyright	2011 - 2013 Maximilian Mader
 # @license	Creative Commons Attribution-NonCommercial-ShareAlike <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode>
-# @package	jQuery.jCounter
+# @package	be.bastelstu.max.wcf.jCounter
 ###
 (($) ->
 	$.fn.jCounter = (container, options) ->
