@@ -7,25 +7,28 @@
 # @package	be.bastelstu.max.wcf.jCounter
 ###
 (($) ->
+	jCounterID = 0
+	
 	$.fn.jCounter = (container, options) ->
 		options = $.extend
 			max: 0
-			counterClass: 'jCounter'
+			counterClass: ''
 			countUp: false
-			width: '100%'
 		, options
 		
 		max = if @.attr('maxlength')? then @.attr 'maxlength' else options.max
 
 		if not container?
-			@.addClass 'jCounterInput'
+			@addClass 'jCounterInput'
 			
-			@.wrap("""<div class="jCounterContainer" style="width: #{options.width}"><div></div></div>""").parent().append """<div class="#{options.counterClass} color-1">#{max}</div>"""
-			jCounterContainer = $(@).parent().children ".#{options.counterClass}"
+			id = @attr('id') ? @attr('id', "jCounterID#{jCounterID++}").attr('id')
+			
+			@wrap("""<div class="jCounterContainer"></div>""").parent().append """<label for="#{id}" class="jCounter #{options.counterClass} color-1">#{max}</label>"""
+			jCounter = $(@).parent().children ".jCounter" + (if options.counterClass != "" then " ." + options.counterClass else "")
 		else
-			jCounterContainer = if typeof container is 'object' then container else $ container
+			jCounter = if typeof container is 'object' then container else $ container
 
-		@.on 'keypress keyup', $.proxy () ->
+		@on 'keypress keyup', =>
 			length = if options.countUp then @.val().length else max - @.val().length
 			
 			color = (if options.countUp 
@@ -46,6 +49,5 @@
 					else
 						3)
 			
-			jCounterContainer.text(length).removeClass().addClass "#{options.counterClass} color-#{color}"
-		, @
+			jCounter.text(length).removeClass().addClass "jCounter #{options.counterClass} color-#{color}"
 )(jQuery)
