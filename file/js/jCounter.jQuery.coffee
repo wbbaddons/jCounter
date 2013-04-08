@@ -10,6 +10,13 @@
 	jCounterID = 0
 	
 	$.fn.jCounter = (container, options) ->
+		if @length > 1
+			@.each (k, v) ->
+				$(v).jCounter container, options
+			return
+			
+		return @ if @parent().hasClass 'jCounterContainer'
+		
 		options = $.extend
 			max: 0
 			counterClass: ''
@@ -27,7 +34,10 @@
 			jCounter = $(@).parent().children ".jCounter" + (if options.counterClass != "" then " ." + options.counterClass else "")
 		else
 			jCounter = if typeof container is 'object' then container else $ container
-
+		@css 'padding-right', 5 + jCounter.outerWidth()
+		jCounter.css 'border-top-right-radius', @css 'border-top-right-radius'
+		jCounter.css 'border-bottom-right-radius', @css 'border-bottom-right-radius'
+		
 		@on 'keypress keyup', =>
 			length = if options.countUp then @.val().length else max - @.val().length
 			
@@ -48,6 +58,7 @@
 						2
 					else
 						3)
-			
 			jCounter.text(length).removeClass().addClass "jCounter #{options.counterClass} color-#{color}"
+			jCounter.css 'margin-left', -(jCounter.outerWidth() + parseFloat(@css('border-right-width')))
+			@css 'padding-right', 5 + jCounter.outerWidth()
 )(jQuery)

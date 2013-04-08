@@ -9,12 +9,10 @@
  
 .jCounterContainer {
 	position: relative;
-	width: 100%;
 }
  
 .jCounterInput {
-	position: absolute;
-	padding-right: 45px !important;
+	padding-right: 45px;
 }
 
 // Thank you http://css-tricks.com/centering-in-the-unknown/
@@ -29,22 +27,22 @@
 	text-align: center;
 	padding: 0 5px;
 	position: absolute;
-	right: 1px;
+	margin-left: -41px; //width + padding + input border-right
 	top: 1px;
 	bottom: 1px;
-	width: 30px;
+	min-width: 30px;
 	z-index: 11;
 	display: inline-block;
 	vertical-align: middle;
 	@jCounterBackgroundColor: darken(@wcfInputBackgroundColor, 15%);
 	background-color: @jCounterBackgroundColor;
 	
-	.adapt(@jCounterBackgroundColor, @color) when (lightness(@jCounterBackgroundColor) - lightness(@color) >= 40%) {
+	.adapt(@backgroundColor, @color) when (lightness(@backgroundColor) - lightness(@color) >= 40%) {
 		color: darken(@color, 8%);
 		content: "darken";
 	}
 	
-	.adapt(@jCounterBackgroundColor, @color) when (lightness(@jCounterBackgroundColor) - lightness(@color) < 40%) {
+	.adapt(@backgroundColor, @color) when (lightness(@backgroundColor) - lightness(@color) < 40%) {
 		color: lighten(@color, 8%);
 		content: "lighten";
 	}
@@ -60,4 +58,8 @@
 	&.color-3 {
 		.adapt(@jCounterBackgroundColor, mix(@wcfInputColor, #D40D12, 30%));
 	}
+}
+
+textarea + .jCounter {
+	margin-top: 0px !important;
 }
