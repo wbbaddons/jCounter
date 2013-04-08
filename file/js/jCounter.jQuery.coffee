@@ -10,38 +10,42 @@
 	jCounterID = 0
 	
 	$.fn.jCounter = (container, options) ->
+		# properly handle multiple elements passed
 		if @length > 1
-			@.each (k, v) ->
+			return @.each (k, v) ->
 				$(v).jCounter container, options
-			return
-			
+		
+		# break if element already has got an inline jCounter assigned
 		return @ if @parent().hasClass 'jCounterContainer'
 		
 		options = $.extend
 			max: 0
-			counterClass: ''
 			countUp: false
 		, options
 		
-		max = if @.attr('maxlength')? then @.attr 'maxlength' else options.max
-
-		if not container?
-			@addClass 'jCounterInput'
-			
-			id = @attr('id') ? @attr('id', "jCounterID#{jCounterID++}").attr('id')
-			
-			@wrap("""<div class="jCounterContainer"></div>""").parent().append """<label for="#{id}" class="jCounter #{options.counterClass} color-1">#{max}</label>"""
-			jCounter = $(@).parent().children ".jCounter" + (if options.counterClass != "" then " ." + options.counterClass else "")
-		else
-			jCounter = if typeof container is 'object' then container else $ container
-		@css 'padding-right', 5 + jCounter.outerWidth()
-		jCounter.css 'border-top-right-radius', @css 'border-top-right-radius'
-		jCounter.css 'border-bottom-right-radius', @css 'border-bottom-right-radius'
+		max = @attr('maxlength') ? options.max
 		
-		@on 'keypress keyup', =>
+		jCounter = 	(if not container?
+					# create inline jCounter
+					id = @attr('id') ? @attr('id', "jCounterID#{jCounterID++}").attr('id')
+					
+					@addClass('jCounterInput').wrap("""<div class="jCounterContainer"></div>""").parent().append """<label for="#{id}" class="jCounter color-1">#{max}</label>"""
+					
+					$(@).parent().children(".jCounter").css
+						borderTopRightRadius: @css 'border-top-right-radius'
+						borderBottomRightRadius: @css 'border-bottom-right-radius'
+				else
+					if typeof container is 'object'
+						container
+					else
+						$ container)
+		
+		# handle keyX events
+		@on 'keypress keyup keydown', =>
 			length = if options.countUp then @.val().length else max - @.val().length
 			
-			color = (if options.countUp 
+			# determine new color
+			color = (if options.countUp
 					if max > 0
 						if length < max / 2
 							1
@@ -58,7 +62,11 @@
 						2
 					else
 						3)
-			jCounter.text(length).removeClass().addClass "jCounter #{options.counterClass} color-#{color}"
-			jCounter.css 'margin-left', -(jCounter.outerWidth() + parseFloat(@css('border-right-width')))
-			@css 'padding-right', 5 + jCounter.outerWidth()
+			jCounter.text(length).removeClass('color-1 color-2 color-3').addClass "color-#{color}"
+			
+			# update position of inline jCounter in case the element changed size
+			if not container?
+				jCounter.css 'margin-left', -(jCounter.outerWidth() + parseFloat(@css('border-right-width')))
+				@css 'padding-right', 5 + jCounter.outerWidth()
+		@trigger 'keypress'
 )(jQuery)
