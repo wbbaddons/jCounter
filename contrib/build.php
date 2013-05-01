@@ -44,7 +44,7 @@ Building file.tar
 
 EOT;
 	chdir('file');
-	passthru('tar cvf ../file.tar * --exclude=*.coffee', $code);
+	passthru('tar cvf ../file.tar --exclude=*.coffee -- *', $code);
 	if ($code != 0) exit($code);
 echo <<<EOT
 
@@ -55,7 +55,7 @@ EOT;
 	chdir('..');
 	file_put_contents('package.xml.old', file_get_contents('package.xml'));
 	file_put_contents('package.xml', preg_replace('~<date>\d{4}-\d{2}-\d{2}</date>~', '<date>'.date('Y-m-d').'</date>', file_get_contents('package.xml')));
-	passthru('tar cvf be.bastelstu.max.wcf.jCounter.tar * --exclude=*.old --exclude=file --exclude=template --exclude=acptemplate --exclude=contrib', $code);
+	passthru('tar cvf be.bastelstu.max.wcf.jCounter.tar --exclude=*.old --exclude=file --exclude=template --exclude=acptemplate --exclude=contrib -- *', $code);
 	if (file_exists('package.xml.old')) {
 		file_put_contents('package.xml', file_get_contents('package.xml.old'));
 		unlink('package.xml.old');
