@@ -5,7 +5,7 @@
 			<environment>user</environment>
 			<templatename>headInclude</templatename>
 			<eventname>javascriptInclude</eventname>
-			<templatecode><![CDATA[<script type="text/javascript" src="{@$__wcf->getPath()}js/jCounter.jQuery.js"></script>]]></templatecode>
+			<templatecode><![CDATA[<script type="text/javascript" src="{@$__wcf->getPath()}js/jCounter.jQuery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>]]></templatecode>
 		</templatelistener>
 	</import>
 </data>
