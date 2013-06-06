@@ -41,7 +41,7 @@
 						$ container)
 		
 		# handle keyX events
-		@on 'keypress keyup keydown', =>
+		@on 'keypress keyup keydown change', =>
 			length = if options.countUp then @.val().length else max - @.val().length
 			
 			# determine new color
