@@ -33,12 +33,10 @@
 	
 	.adapt(@backgroundColor, @color) when (lightness(@backgroundColor) - lightness(@color) >= 40%) {
 		color: darken(@color, 8%);
-		content: "darken";
 	}
 	
 	.adapt(@backgroundColor, @color) when (lightness(@backgroundColor) - lightness(@color) < 40%) {
 		color: lighten(@color, 8%);
-		content: "lighten";
 	}
 	
 	&.color-1 {
