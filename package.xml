@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Shows a character counter next to inputs]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Zeigt Zeichenzähler neben Eingabefeldern an.]]></packagedescription>
 		<isapplication>0</isapplication>
-		<version>1.0.0 Beta 1</version>
+		<version>1.0.0 Beta 2</version>
 		<date>2013-08-03</date>
 	</packageinformation>
 	
@@ -19,6 +19,11 @@
 	</requiredpackages>
 	
 	<instructions type="install">
+		<instruction type="file">file.tar</instruction>
+		<instruction type="templateListener">templateListener.xml</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="*">
 		<instruction type="file">file.tar</instruction>
 		<instruction type="templateListener">templateListener.xml</instruction>
 	</instructions>

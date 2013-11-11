@@ -23,6 +23,7 @@
 			countUp: false
 		, options
 		
+		options.colors = ['blue', 'orange', 'red'] if not options.colors? or options.colors.length < 3
 		max = @attr('maxlength') ? options.max
 		
 		jCounter = (
@@ -35,11 +36,13 @@
 				# create inline jCounter
 				id = @attr('id') ? @attr('id', "jCounterID#{jCounterID++}").attr('id')
 				
-				@addClass('jCounterInput').wrap("""<div class="jCounterContainer"></div>""").parent().append """<label for="#{id}" class="jCounter color-1">#{max}</label>"""
+				@addClass('jCounterInput').wrap("""<div class="jCounterContainer"></div>""").parent().append """<label for="#{id}" class="jCounter badge #{options.colors[0]}">#{max}</label>"""
 				
 				$(@).parent().children(".jCounter").css
-					borderTopRightRadius: @css 'border-top-right-radius'
-					borderBottomRightRadius: @css 'border-bottom-right-radius'
+					borderTopRightRadius: @.css 'border-top-right-radius'
+					borderBottomRightRadius: @.css 'border-bottom-right-radius'
+					borderBottomLeftRadius: @.css 'border-bottom-left-radius'
+					borderTopLeftRadius: 	@.css 'border-top-left-radius'
 		)
 		
 		# handle keyX events
@@ -50,21 +53,21 @@
 			color = (if options.countUp
 					if max > 0
 						if length < max / 2
-							1
+							options.colors[0]
 						else if max / 2 < length <= max / 1.2
-							2
+							options.colors[1]
 						else
-							3
+							options.colors[2]
 					else
-						1
+						options.colors[0]
 				else
 					if max / 2 < length
-						1
+						options.colors[0]
 					else if max / 6 <= length <= max / 2
-						2
+						options.colors[1]
 					else
-						3)
-			jCounter.text(length).removeClass('color-1 color-2 color-3').addClass "color-#{color}"
+						options.colors[2])
+			jCounter.text(length).removeClass(options.colors.join ' ').addClass color
 			
 			# update position of inline jCounter in case the element changed size
 			unless container?

@@ -21,35 +21,14 @@
 	position: absolute;
 	top: 1px;
 	bottom: 1px;
-	width: 30px;
+	min-width: 30px;
+	max-width: 30%;
 	z-index: 11;
 	display: inline-block;
 	vertical-align: middle;
 	overflow: hidden;
 	text-overflow: "   \221E   ";
 	white-space: nowrap;
-	@jCounterBackgroundColor: darken(@wcfInputBackgroundColor, 15%);
-	background-color: @jCounterBackgroundColor;
-	
-	.adapt(@backgroundColor, @color) when (lightness(@backgroundColor) - lightness(@color) >= 40%) {
-		color: darken(@color, 8%);
-	}
-	
-	.adapt(@backgroundColor, @color) when (lightness(@backgroundColor) - lightness(@color) < 40%) {
-		color: lighten(@color, 8%);
-	}
-	
-	&.color-1 {
-		.adapt(@jCounterBackgroundColor, mix(@wcfInputColor, #666, 50%));
-	}
-	
-	&.color-2 {
-		.adapt(@jCounterBackgroundColor, mix(@wcfInputColor, #EECC22, 70%));
-	}
-	
-	&.color-3 {
-		.adapt(@jCounterBackgroundColor, mix(@wcfInputColor, #D40D12, 30%));
-	}
 	
 	// Thank you http://css-tricks.com/centering-in-the-unknown/
 	&:before {
