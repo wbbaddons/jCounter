@@ -71,7 +71,6 @@
 			
 			# update position of inline jCounter in case the element changed size
 			unless container?
-				jCounter.css 'margin-left', -(jCounter.outerWidth() + parseFloat(@css('border-right-width')))
-				@css 'padding-right', 5 + jCounter.outerWidth()
+				@css 'padding-right', 4 + jCounter.outerWidth()
 		@trigger 'keypress'
 )(jQuery)
