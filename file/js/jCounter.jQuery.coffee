@@ -36,16 +36,14 @@
 	# See http://chris-spittles.co.uk/jquery-calculate-scrollbar-width/#comment-1603
 	###
 	$.scrollbarWidth = ->
-		$inner = $ '<div>'
-		$outer = $('<div>').append $inner
-		inner = $inner[0]
-		outer = $outer[0]
-			
+		inner = $ '<div>'
+		outer = $('<div>').append inner
+		
 		$('body').append outer
-		width1 = inner.offsetWidth
-		$outer.css 'overflow', 'scroll'
-		width2 = outer.clientWidth
-		do $outer.remove
+		width1 = inner.prop 'offsetWidth'
+		outer.css 'overflow', 'scroll'
+		width2 = outer.prop 'clientWidth'
+		do outer.remove
 		result = width1 - width2
 		
 		$.scrollbarWidth = ->
