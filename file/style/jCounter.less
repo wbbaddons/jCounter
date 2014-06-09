@@ -6,11 +6,22 @@
  * @license	BSD 3-Clause License <http://opensource.org/licenses/BSD-3-Clause>
  * @package	be.bastelstu.max.wcf.jCounter
  */
- 
+
 .jCounterContainer {
 	position: relative;
+	
+	> textarea {
+		// See http://stackoverflow.com/a/5196591
+		vertical-align: top;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+		box-sizing: border-box;
+		
+		overflow-y: scroll;
+	}
 }
- 
+
 .jCounterInput {
 	padding-right: 45px;
 }

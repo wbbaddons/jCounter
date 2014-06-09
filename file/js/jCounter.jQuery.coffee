@@ -31,7 +31,28 @@
 			else
 				last = now
 				fn.apply context, args
-	
+				
+	###
+	# See http://chris-spittles.co.uk/jquery-calculate-scrollbar-width/#comment-1603
+	###
+	$.scrollbarWidth = ->
+		$inner = $ '<div>'
+		$outer = $('<div>').append $inner
+		inner = $inner[0]
+		outer = $outer[0]
+			
+		$('body').append outer
+		width1 = inner.offsetWidth
+		$outer.css 'overflow', 'scroll'
+		width2 = outer.clientWidth
+		do $outer.remove
+		result = width1 - width2
+		
+		$.scrollbarWidth = ->
+			result
+			
+		result
+		
 	$.fn.jCounter = (container, options) ->
 		# properly handle multiple elements passed
 		if @length > 1
@@ -39,10 +60,10 @@
 				$(v).jCounter container, options
 		
 		# check for supported elements
-		unless @is 'textarea, input:not([type=radio], [type=checkbox], [type=hidden], [type=color], [type=number], [type=range], [type=datetime], [type=date], [type=datetime-local], [type=month], [type=time], [type=week])'
+		if not @is('textarea, input[type=text], input[type=password], input[type=search], input[type=email], input[type=url]') or @hasClass 'jsDatePicker'
 			console.log '[jCounter] Unsupported element ' + if @.prop('tagName') is 'INPUT' then """INPUT type='#{@.attr('type')}'""" else """type #{@.prop('tagName')}"""
 			return @
-		
+			
 		# break if element already has got an inline jCounter assigned
 		return @ if @parent().hasClass 'jCounterContainer'
 		
@@ -99,7 +120,9 @@
 			
 			# update position of inline jCounter in case the element changed size
 			unless container?
-				jCounter.css 'margin-left', -(jCounter.outerWidth() + parseFloat(@css('border-right-width')) +  parseFloat(@css('margin-right')) + 1)
+				jCounter.css 'top', parseFloat(@css 'border-top-width') + parseFloat(@css 'margin-top') + 1
+				jCounter.css 'bottom', parseFloat(@css 'border-bottom-width') + parseFloat(@css 'margin-bottom') + 1
+				jCounter.css 'margin-left', -(jCounter.outerWidth() + parseFloat(@css 'border-right-width') +  parseFloat(@css 'margin-right') + 1) - (if @[0].type is 'textarea' then $.scrollbarWidth() else 0)
 				@css 'padding-right', 3 + jCounter.outerWidth()
 		, 16
 		
