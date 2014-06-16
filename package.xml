@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[jCounter is a simple character counter based on jQuery that fits into the design of your application.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[jCounter ist ein einfacher, sich an das Design Ihrer Community anpassender Zeichenzähler auf Basis von jQuery.]]></packagedescription>
 		<isapplication>0</isapplication>
-		<version>1.0.0</version>
-		<date>2014-06-09</date>
+		<version>1.0.1</version>
+		<date>2014-06-16</date>
 		<license><![CDATA[BSD 3-Clause License <http://opensource.org/licenses/BSD-3-Clause>]]></license>
 	</packageinformation>
 	
